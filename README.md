@@ -1,59 +1,73 @@
 # ERP Support Analytics Dashboard
 
-Dashboard demonstrativo para análise de chamados de suporte ERP com dados sintéticos.
+Projeto funcional de analise de chamados de suporte ERP com dados sinteticos.
 
 ## Objetivo
 
-Mostrar capacidade de transformar tickets de suporte em indicadores úteis para times de implantação, suporte, produto e gestão de sistemas contábeis/ERP.
+Criar um fluxo simples para gerar tickets ficticios, calcular indicadores e preparar dados para dashboard.
 
-## Problema de negócio
+## Funcionalidades
 
-Empresas de software e escritórios que usam ERP precisam monitorar volume de chamados, tempo médio de resolução, categorias de erro, prioridade e cumprimento de SLA. Este projeto simula esses dados e apresenta uma estrutura de análise profissional.
-
-## Stack
-
-- Python
-- pandas
-- Plotly/Dash ou Streamlit
-- Matplotlib
-- CSV sintético
+- Geracao de tickets sinteticos.
+- Calculo de KPIs de suporte.
+- Indicadores por modulo do sistema.
+- Taxa de SLA.
+- Tempo medio de primeira resposta.
+- Tempo medio de resolucao.
+- Base pronta para dashboard em Streamlit, Dash ou Power BI.
 
 ## Estrutura
 
 ```text
-app/
-  dashboard.py
 src/
   generate_tickets.py
   metrics.py
+
 data/
-  README.md
-notebooks/
-  exploratory_analysis.ipynb
+  synthetic_erp_tickets.csv
+
 reports/
-  sample_metrics.md
-assets/
-  screenshots/
+  kpi_summary.csv
+  module_summary.csv
 ```
+
+## Como executar
+
+```bash
+pip install -r requirements.txt
+python src/generate_tickets.py --rows 500 --output data/synthetic_erp_tickets.csv
+```
+
+Depois, use as funcoes de `src/metrics.py` em um notebook ou script para calcular os indicadores.
+
+## Exemplo de uso em Python
+
+```python
+import pandas as pd
+from src.metrics import calculate_kpis, tickets_by_module
+
+df = pd.read_csv('data/synthetic_erp_tickets.csv')
+print(calculate_kpis(df))
+print(tickets_by_module(df))
+```
+
+## Indicadores calculados
+
+- Total de tickets.
+- Tempo medio de primeira resposta.
+- Tempo medio de resolucao.
+- Percentual de SLA cumprido.
+- Total de tickets criticos.
+- Tickets e SLA por modulo.
 
 ## Dados
 
-Os dados são sintéticos e simulam tickets de suporte ERP. Nenhum dado real de cliente, empresa, sistema interno ou atendimento corporativo é incluído.
+A base e totalmente ficticia. Ela nao representa empresa, cliente, contrato ou sistema real.
 
-## Métricas demonstradas
+## Proxima etapa
 
-- Chamados por módulo do ERP
-- Tempo médio de primeira resposta
-- Tempo médio de resolução
-- Taxa de SLA cumprido
-- Prioridade dos chamados
-- Categorias de erro
-- Volume por mês
+Criar `app/dashboard.py` para visualizar os indicadores em Streamlit ou Dash.
 
-## Cargos-alvo
+## Licenca
 
-Analista de Suporte ERP, Analista de Sistemas, Implantador ERP, Analista de Dados/BI, Analista de Produto e Consultor de Sistemas Contábeis.
-
-## Aviso
-
-Projeto educacional e demonstrativo para portfólio. Não contém dados reais da Alterdata, clientes, contratos ou chamados corporativos.
+MIT License.
