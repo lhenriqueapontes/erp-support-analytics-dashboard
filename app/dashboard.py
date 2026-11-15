@@ -143,19 +143,11 @@ summary = tickets_by_module(filtered).rename(
         "module": "Módulo",
         "tickets": "Chamados",
         "avg_resolution_hours": "Resolução média (h)",
-        "sla_rate": "Taxa de SLA",
     }
 )
-st.dataframe(
-    summary,
-    use_container_width=True,
-    hide_index=True,
-    column_config={"Taxa de SLA": st.column_config.NumberColumn(format="%.0f%%")},
-)
-st.caption(
-    "Taxas de SLA da tabela são proporções de 0 a 1; "
-    "dados gerados por simulação para demonstração."
-)
+summary["SLA (%)"] = (summary.pop("sla_rate") * 100).round(1)
+st.dataframe(summary, use_container_width=True, hide_index=True)
+st.caption("Indicadores ilustrativos, calculados apenas com dados sintéticos.")
 
 st.subheader("Registros filtrados")
 st.dataframe(filtered.sort_values("created_at", ascending=False), use_container_width=True)
