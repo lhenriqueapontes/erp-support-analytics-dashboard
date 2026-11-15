@@ -17,7 +17,7 @@ PRIORITIES = ["Low", "Medium", "High", "Critical"]
 
 def generate_tickets(n: int = 500, seed: int = 42) -> pd.DataFrame:
     rng = np.random.default_rng(seed)
-    created = pd.date_range("2025-01-01", periods=n, freq="12H")
+    created = pd.date_range("2025-01-01", periods=n, freq="12h")
     priority = rng.choice(PRIORITIES, size=n, p=[0.35, 0.40, 0.20, 0.05])
     first_response_hours = rng.gamma(shape=2.0, scale=1.5, size=n).round(2)
     resolution_hours = (first_response_hours + rng.gamma(shape=3.0, scale=6.0, size=n)).round(2)
