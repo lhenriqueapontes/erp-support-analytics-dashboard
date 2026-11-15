@@ -1,73 +1,73 @@
 # ERP Support Analytics Dashboard
 
-Projeto funcional de analise de chamados de suporte ERP com dados sinteticos.
+**Portfólio demonstrativo de análise de suporte ERP em Python e Streamlit.** O projeto gera chamados **100% sintéticos** e permite explorar indicadores de atendimento, sem usar informações de empresas ou clientes reais.
 
-## Objetivo
+> Status: dashboard implementado nesta branch de revisão. O sistema não está publicado como serviço e não representa uma implantação comercial.
 
-Criar um fluxo simples para gerar tickets ficticios, calcular indicadores e preparar dados para dashboard.
+## O que demonstra
 
-## Funcionalidades
+- Geração reprodutível de chamados fictícios, com prioridades, módulos, categorias e tempos de atendimento.
+- KPIs: volume, taxa de cumprimento do SLA, primeira resposta, resolução e chamados críticos.
+- Dashboard interativo em **Streamlit** com filtros por módulo, prioridade e período.
+- Gráficos de volume por módulo e evolução por dia, tabela comparativa de SLA e exportação CSV.
+- Testes de regressão com **pytest** e verificação automatizada no GitHub Actions.
 
-- Geracao de tickets sinteticos.
-- Calculo de KPIs de suporte.
-- Indicadores por modulo do sistema.
-- Taxa de SLA.
-- Tempo medio de primeira resposta.
-- Tempo medio de resolucao.
-- Base pronta para dashboard em Streamlit, Dash ou Power BI.
+## Executar localmente
 
-## Estrutura
-
-```text
-src/
-  generate_tickets.py
-  metrics.py
-
-data/
-  synthetic_erp_tickets.csv
-
-reports/
-  kpi_summary.csv
-  module_summary.csv
-```
-
-## Como executar
+Pré-requisito: Python 3.11 ou superior.
 
 ```bash
-pip install -r requirements.txt
+git clone https://github.com/lhenriqueapontes/erp-support-analytics-dashboard.git
+cd erp-support-analytics-dashboard
+python -m venv .venv
+# Linux/macOS: source .venv/bin/activate
+# Windows PowerShell: .venv\\Scripts\\Activate.ps1
+python -m pip install -r requirements.txt
 python src/generate_tickets.py --rows 500 --output data/synthetic_erp_tickets.csv
+python -m streamlit run app/dashboard.py
 ```
 
-Depois, use as funcoes de `src/metrics.py` em um notebook ou script para calcular os indicadores.
+O Streamlit mostrará um endereço local no terminal (em geral `http://localhost:8501`). O painel também pode gerar dados demonstrativos automaticamente se o CSV não existir.
 
-## Exemplo de uso em Python
+Para executar os testes:
 
-```python
-import pandas as pd
-from src.metrics import calculate_kpis, tickets_by_module
-
-df = pd.read_csv('data/synthetic_erp_tickets.csv')
-print(calculate_kpis(df))
-print(tickets_by_module(df))
+```bash
+python -m pip install pytest
+python -m pytest -q
 ```
 
-## Indicadores calculados
+## Estrutura principal
 
-- Total de tickets.
-- Tempo medio de primeira resposta.
-- Tempo medio de resolucao.
-- Percentual de SLA cumprido.
-- Total de tickets criticos.
-- Tickets e SLA por modulo.
+```text
+app/dashboard.py                    # painel interativo
+src/generate_tickets.py            # gerador de dados sintéticos
+src/metrics.py                     # cálculos de KPIs e agrupamentos
+tests/test_metrics.py              # verificações automatizadas
+.github/workflows/python-tests.yml # CI de testes em pull requests
+requirements.txt
+README.md
+```
 
-## Dados
+A pasta `data/` pode ser criada automaticamente ao gerar o CSV; não é necessário armazenar dados de clientes.
 
-A base e totalmente ficticia. Ela nao representa empresa, cliente, contrato ou sistema real.
+## Perguntas de negócio que a demo permite investigar
 
-## Proxima etapa
+1. Qual módulo concentra mais solicitações?
+2. Qual prioridade está mais associada a falhas de SLA?
+3. Quais módulos têm maior tempo de resolução?
+4. Como o volume de chamados varia no período selecionado?
 
-Criar `app/dashboard.py` para visualizar os indicadores em Streamlit ou Dash.
+As respostas são **simulações ilustrativas**; não autorizam conclusões sobre a operação de nenhuma empresa.
 
-## Licenca
+## Limitações e próximos passos
 
-MIT License.
+- Os dados são gerados artificialmente e as metas de SLA são simplificadas.
+- O projeto não tem login, persistência em banco, integração com ERP real ou monitoramento em produção.
+- Sugestões futuras: testes do fluxo completo do painel, exemplos visuais (screenshots), publicação opcional da demo, análises de tendências e documentação de decisões baseadas nos indicadores.
+- Nenhuma melhoria de SLA, redução de custos ou ganho real de clientes foi medida.
+
+## Ética, autoria e licença
+
+Projeto de demonstração educacional e de portfólio, com dados fictícios. Não deve receber credenciais, documentos internos nem dados pessoais de pacientes ou clientes.
+
+Licença MIT — consulte `LICENSE`.
